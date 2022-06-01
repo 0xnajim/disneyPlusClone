@@ -4,6 +4,9 @@ import ImgSlider from './ImgSlider'
 import Viewers from './Viewers'
 import Movies from './Movies'
 import db from '../firebase'
+import NewDisplay from './NewDisplay'
+import Originals from './Originals'
+import Trending from './Trending'
 
 function Home() {
     // useEffect(() => {
@@ -17,6 +20,9 @@ function Home() {
             <ImgSlider/>
             <Viewers/>
             <Movies/>
+            <NewDisplay/>
+            <Originals/>
+            <Trending/>
         </Container>
     )
 }
