@@ -1,10 +1,13 @@
-import { configureStore } from '@reduxjs/toolkit';
-import movieSlice from '../features/movie/movieSlice';
-import userSlice from '../features/user/userSlice';
+import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
+import userReducer from "../features/user/userSlice";
+import movieReducer from "../features/movie/movieSlice";
 
-export const store = configureStore({
+export default configureStore({
   reducer: {
-    movie: movieSlice.reducer,
-    user: userSlice.reducer,
+    user: userReducer,
+    movie: movieReducer,
   },
+  middleware: getDefaultMiddleware({
+    serializableCheck: false,
+  }),
 });

@@ -1,14 +1,15 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { selectOriginal } from "../features/movie/movieSlice";
+import { selectRecommend } from "../features/movie/movieSlice";
 
-const Originals = (props) => {
-  const movies = useSelector(selectOriginal);
+const Recommends = (props) => {
+  const movies = useSelector(selectRecommend);
+  console.log(movies, ":🛢️");
 
   return (
     <Container>
-      <h4>Originals</h4>
+      <h4>Recommended for You</h4>
       <Content>
         {movies &&
           movies.map((movie, key) => (
@@ -49,6 +50,7 @@ const Wrap = styled.div`
   position: relative;
   transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s;
   border: 3px solid rgba(249, 249, 249, 0.1);
+
   img {
     inset: 0px;
     display: block;
@@ -61,6 +63,7 @@ const Wrap = styled.div`
     z-index: 1;
     top: 0;
   }
+
   &:hover {
     box-shadow: rgb(0 0 0 / 80%) 0px 40px 58px -16px,
       rgb(0 0 0 / 72%) 0px 30px 22px -10px;
@@ -69,4 +72,4 @@ const Wrap = styled.div`
   }
 `;
 
-export default Originals;
+export default Recommends;
