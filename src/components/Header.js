@@ -144,8 +144,9 @@ const NavMenu = styled.div`
   position: relative;
   margin-right: auto;
   margin-left: 25px;
-
+  
   a {
+    cursor: pointer;
     display: flex;
     align-items: center;
     padding: 0 12px;

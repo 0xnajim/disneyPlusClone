@@ -1,12 +1,24 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
+import YouTube from "react-youtube";
 import db from "../firebase";
 
 const Detail = (props) => {
+  const [isTrailerVis, setIsTrailerVis] = useState(false);
   const { id } = useParams();
   const [detailData, setDetailData] = useState({});
-
+  const changeTrailerVis =()=>{
+    setIsTrailerVis(!isTrailerVis);
+  }
+  const opts = {
+    height: "390",
+    width: "640",
+    playerVars: {
+      // https://developers.google.com/youtube/player_parameters
+      autoplay: 1,
+    },
+  };
   useEffect(() => {
     db.collection("movies")
       .doc(id)
@@ -25,10 +37,13 @@ const Detail = (props) => {
 
   return (
     <Container>
+      {isTrailerVis && <Backdrop onClick={changeTrailerVis}></Backdrop>}
+      {isTrailerVis && <Youtube_Trailer>
+        <YouTube videoId={detailData.youtubeId} opts={opts} />
+      </Youtube_Trailer>}
       <Background>
         <img alt={detailData.title} src={detailData.backgroundImg} />
       </Background>
-
       <ImageTitle>
         <img alt={detailData.title} src={detailData.titleImg} />
       </ImageTitle>
@@ -38,7 +53,7 @@ const Detail = (props) => {
             <img src="/images/play-icon-black.png" alt="" />
             <span>Play</span>
           </Player>
-          <Trailer>
+          <Trailer onClick={changeTrailerVis}>
             <img src="/images/play-icon-white.png" alt="" />
             <span>Trailer</span>
           </Trailer>
@@ -59,14 +74,31 @@ const Detail = (props) => {
   );
 };
 
-const Container = styled.div`
-  position: relative;
-  min-height: calc(100vh-250px);
-  overflow-x: hidden;
-  display: block;
-  padding: 0 calc(3.5vw + 5px);
-`;
 
+const Container = styled.div`
+position: relative;
+min-height: calc(100vh-250px);
+overflow-x: hidden;
+display: block;
+padding: 0 calc(3.5vw + 5px);
+`
+const Backdrop = styled.div`
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100vh;
+z-index: 1;
+background: rgba(0, 0, 0, 0.75);
+`
+
+const Youtube_Trailer = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 5;
+  transform: translate(-50%, -50%);
+`
 const Background = styled.div`
   left: 0px;
   opacity: 0.8;
